@@ -13,7 +13,9 @@ app.use(express.static(path.join(__dirname, 'static')));
 app.set('view engine', 'jade')
 
 app.get('/', (req, res) => {
-  res.render('index.jade')
+  res.render('index.jade', {
+    projectName: config.projectName
+  })
 });
 
 app.get('/tree', (req, res) => {

@@ -1,0 +1,59 @@
+extends layout
+block content
+  #gitbox
+    .navbar.navbar-default
+      .container
+        .navbar-brand KoolShare.io
+    .container
+      .row
+        .col-md-5.tree
+          tree-part(:tree="tree")
+        .col-md-7.right-part
+          ol.breadcrumb.navigator
+            li(v-for="p in navigator") {{p}}
+          .tools(v-show="selecting.tree && selecting.tree.type === 'folder'")
+            .buttons
+              .btn.btn-success(@click="nowShowing = 'upload'")
+                i.fa.fa-upload
+                span 上传文件
+              .btn.btn-warning(@click="nowShowing = 'renameFolder'")
+                i.fa.fa-edit
+                span 重命名目录
+              .btn.btn-info(@click="nowShowing = 'createFolder'")
+                i.fa.fa-folder-o
+                span 新建子目录
+              .btn.btn-danger(@click="nowShowing = 'removeFolder'")
+                i.fa.fa-remove
+                span 删除目录
+            .create-folder(v-if="nowShowing === 'renameFolder'")
+              label 把目录改名为：
+              input.form-control(v-model="renameFolderName", v-el:renameFolderName)
+              p
+                .btn.btn-success(@click="renameFolder") 确定
+            .create-folder(v-if="nowShowing === 'createFolder'")
+              label 新建目录：
+              input.form-control(v-model="createFolderName", v-el:createFolderName)
+              p
+                .btn.btn-success(@click="createFolder") 确定
+            .remove-folder(v-if="nowShowing === 'removeFolder'")
+              label 确定要删除此目录吗？
+              .btn.btn-danger(@click="remove") 删除
+              .btn.btn-default(@click="nowShowing = ''") 取消
+            .upload(v-show="nowShowing === 'upload'")
+              form.dropzone#upload-dropzone(action='/upload')
+                input(name="path", type="hidden", v-model="path")
+          .tools(v-show="selecting.tree && selecting.tree.type === 'file'")
+            .buttons
+              .btn.btn-warning
+                i.fa.fa-edit
+                span 重命名
+              .btn.btn-danger
+                i.fa.fa-remove
+                span 删除文件
+  #tree-part(style="display: none")
+    .name(@click="select", :class="{selected: selected}")
+      i.fa(:class="icon")
+      |{{tree.name}}
+    .children(v-if="tree.children", v-show="expanded")
+      tree-part(v-for="t in tree.children", :tree="t", track-by="name")
+  script(src="/js/index.js")

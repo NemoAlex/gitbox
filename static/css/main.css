@@ -1,0 +1,45 @@
+.btn span {
+  margin-left: 5px;
+}
+
+#gitbox .tree {
+  font-size: 16px;
+}
+#gitbox .tree .name {
+  padding-left: 24px;
+  position: relative;
+  cursor: pointer;
+}
+#gitbox .tree .name:hover {
+  background: #F1F1F1;
+}
+#gitbox .tree .name.selected {
+  color: #37b963;
+}
+#gitbox .tree .name i {
+  position: absolute;
+  left: 4px;
+  top: 3px;
+}
+#gitbox .tree .children {
+  padding-left: 10px;
+}
+
+#gitbox .navigator {
+  color: #777;
+}
+#gitbox .tools .btn {
+  margin-right: 4px;
+}
+
+#gitbox .upload {
+  margin-top: 20px;
+}
+#gitbox .upload .dropzone {
+  border: 2px dashed #777;
+  font-size: 20px;
+}
+
+#gitbox .right-part .buttons {
+  margin-bottom: 10px;
+}

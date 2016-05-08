@@ -1,0 +1,27 @@
+{
+  "name": "gitbox",
+  "version": "0.0.1",
+  "description": "A web service provides an online disk and backup it to a git repository.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NemoAlex/gitbox.git"
+  },
+  "author": "NemoAlex",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NemoAlex/gitbox/issues"
+  },
+  "homepage": "https://github.com/NemoAlex/gitbox#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "express": "^4.13.4",
+    "jade": "^1.11.0",
+    "multer": "^1.1.0",
+    "nodegit": "^0.13.0",
+    "rimraf": "^2.5.2"
+  }
+}

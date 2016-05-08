@@ -1,10 +1,4 @@
-Dropzone.options.uploadDropzone = {
-  init: function() {
-    this.on("complete", function(file) {
-      vue.fetch()
-    });
-  }
-}
+Dropzone.autoDiscover = false
 
 var treePart = Vue.extend({
   template: '#tree-part',
@@ -43,7 +37,9 @@ var vue =  new Vue({
     selecting: {},
     nowShowing: '',
     createFolderName: '',
-    renameFolderName: ''
+    renameFolderName: '',
+    renameFileName: '',
+    dropzone: {}
   },
   computed: {
     'navigator': function () {
@@ -57,8 +53,19 @@ var vue =  new Vue({
   },
   watch: {
     'nowShowing': function (val) {
-      if (val === 'renameFolder') this.$els.renamefoldername.focus()
+      if (val === 'renameFolder') {
+        this.renameFolderName = this.navigator[this.navigator.length - 1]
+        this.$els.renamefoldername.focus()
+      }
+      else if (val === 'renameFile') {
+        this.renameFileName = this.navigator[this.navigator.length - 1]
+        this.$els.renamefilename.focus()
+      }
       else if (val === 'createFolder') this.$els.createfoldername.focus()
+    },
+    'path': function () {
+      this.nowShowing = ''
+      this.dropzone.removeAllFiles()
     }
   },
   events: {
@@ -84,16 +91,18 @@ var vue =  new Vue({
         path: this.path + '/' + this.createFolderName
       })
       .then(function (res) {
+        this.createFolderName = ''
         this.fetch()
       })
     },
-    'renameFolder': function () {
+    'rename': function (newname) {
       this.nowShowing = ''
       this.$http.post('/rename', {
         path: this.path,
-        newname: this.renameFolderName
+        newname: newname
       })
       .then(function (res) {
+        this.renameFolderName = ''
         this.fetch()
         this.$emit('select', this.$children[0])
       })
@@ -112,6 +121,10 @@ var vue =  new Vue({
   ready: function () {
     this.fetch()
     this.$emit('select', this.$children[0])
+    this.dropzone = new Dropzone("#upload-dropzone");
+    this.dropzone.on("complete", function(file) {
+      vue.fetch()
+    });
   }
 })
 

@@ -29,27 +29,41 @@ block content
               label 把目录改名为：
               input.form-control(v-model="renameFolderName", v-el:renameFolderName)
               p
-                .btn.btn-success(@click="renameFolder") 确定
+                .btn.btn-success(@click="rename(renameFolderName)") 确定
+                .btn.btn-default(@click="nowShowing = ''") 取消
             .create-folder(v-if="nowShowing === 'createFolder'")
               label 新建目录：
               input.form-control(v-model="createFolderName", v-el:createFolderName)
               p
                 .btn.btn-success(@click="createFolder") 确定
+                .btn.btn-default(@click="nowShowing = ''") 取消
             .remove-folder(v-if="nowShowing === 'removeFolder'")
               label 确定要删除此目录吗？
-              .btn.btn-danger(@click="remove") 删除
-              .btn.btn-default(@click="nowShowing = ''") 取消
+              p
+                .btn.btn-danger(@click="remove") 删除
+                .btn.btn-default(@click="nowShowing = ''") 取消
             .upload(v-show="nowShowing === 'upload'")
               form.dropzone#upload-dropzone(action='/upload')
                 input(name="path", type="hidden", v-model="path")
           .tools(v-show="selecting.tree && selecting.tree.type === 'file'")
             .buttons
-              .btn.btn-warning
+              .btn.btn-warning(@click="nowShowing = 'renameFile'")
                 i.fa.fa-edit
                 span 重命名
-              .btn.btn-danger
+              .btn.btn-danger(@click="nowShowing = 'removeFile'")
                 i.fa.fa-remove
                 span 删除文件
+            .create-file(v-if="nowShowing === 'renameFile'")
+              label 把文件改名为：
+              input.form-control(v-model="renameFileName", v-el:renameFileName)
+              p
+                .btn.btn-success(@click="rename(renameFileName)") 确定
+                .btn.btn-default(@click="nowShowing = ''") 取消
+            .remove-folder(v-if="nowShowing === 'removeFile'")
+              label 确定要删除此文件吗？
+              p
+                .btn.btn-danger(@click="remove") 删除
+                .btn.btn-default(@click="nowShowing = ''") 取消
   #tree-part(style="display: none")
     .name(@click="select", :class="{selected: selected}")
       i.fa(:class="icon")

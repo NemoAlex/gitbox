@@ -60,11 +60,13 @@ var upload = multer({ storage: storage })
 
 app.post('/upload', upload.any(), (req, res) => {
   res.end()
+  git.updateToOrigin('Update by ' + req.user.fullName)
 });
 
 app.post('/create_folder', bodyParser.json(), (req, res) => {
   var path = req.body.path
   fs.mkdirSync(config.diskPath + path)
+
   res.end()
 })
 
@@ -76,18 +78,21 @@ app.post('/rename', bodyParser.json(), (req, res) => {
   var newPath = arr.join('/')
 
   fs.renameSync(path, newPath)
+
   res.end()
+  git.updateToOrigin('Update by ' + req.user.fullName)
 })
 
 app.post('/remove', bodyParser.json(), (req, res) => {
   var path = config.diskPath + req.body.path
   rimraf(path, function () {
     res.end()
+    git.updateToOrigin('Update by ' + req.user.fullName)
   })
 })
 
 app.get('/commit_and_push', (req, res) => {
-  git.updateToOrigin('Update by Nemo')
+  git.updateToOrigin('Update by ' + req.user.fullName)
   .then(function (log) {
     res.json(log)
   })

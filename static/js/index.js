@@ -78,6 +78,11 @@ var vue =  new Vue({
     }
   },
   methods: {
+    'logout': function () {
+      this.$http.post('/logout').then(function () {
+        window.location.reload()
+      })
+    },
     'fetch': function () {
       this.$http.get('/tree')
       .then(function (res) {

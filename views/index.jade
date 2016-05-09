@@ -4,6 +4,9 @@ block content
     .navbar.navbar-default
       .container
         .navbar-brand #{projectName}
+        ul.nav.navbar-nav.navbar-right
+          li
+            a(@click.prevent="logout", href="") 退出
     .container
       .row
         .col-md-5.tree

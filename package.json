@@ -20,6 +20,7 @@
     "body-parser": "^1.15.1",
     "child-process-promise": "^2.0.2",
     "express": "^4.13.4",
+    "express-stormpath": "^3.1.2",
     "jade": "^1.11.0",
     "multer": "^1.1.0",
     "rimraf": "^2.5.2"

@@ -9,10 +9,32 @@ var express = require('express')
   , rimraf = require('rimraf')
   , util = require('./lib/util')
   , git = require('./lib/git')
+  , stormpath = require('express-stormpath')
 
 app.use(express.static(Path.join(__dirname, 'static')));
 
 app.set('view engine', 'jade')
+
+if (config.enableStormpath) {
+  app.use(stormpath.init(app, {
+    client: {
+      apiKey: {
+        id: config.stormpath.id,
+        secret: config.stormpath.secret,
+      }
+    },
+    application: {
+      href: config.stormpath.href
+    },
+    web: {
+      register: {
+        enabled: config.enableRegister
+      }
+    }
+  }))
+
+  app.use(stormpath.loginRequired)
+}
 
 app.get('/', (req, res) => {
   res.render('index.jade', {

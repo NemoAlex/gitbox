@@ -2,13 +2,15 @@ var express = require('express')
   , multer  = require('multer')
   , fs = require('fs')
   , app = express()
-  , path = require('path')
+  , Path = require('path')
   , dirTree = require('./lib/file-tree')
   , config = require('./config')
   , bodyParser = require('body-parser')
   , rimraf = require('rimraf')
+  , util = require('./lib/util')
+  , git = require('./lib/git')
 
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(Path.join(__dirname, 'static')));
 
 app.set('view engine', 'jade')
 
@@ -59,6 +61,16 @@ app.post('/remove', bodyParser.json(), (req, res) => {
   var path = config.diskPath + req.body.path
   rimraf(path, function () {
     res.end()
+  })
+})
+
+app.get('/commit_and_push', (req, res) => {
+  git.updateToOrigin('Update by Nemo')
+  .then(function (log) {
+    res.json(log)
+  })
+  .catch(function (err) {
+    res.status(403).send(err)
   })
 })
 

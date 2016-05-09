@@ -18,10 +18,10 @@
   "homepage": "https://github.com/NemoAlex/gitbox#readme",
   "dependencies": {
     "body-parser": "^1.15.1",
+    "child-process-promise": "^2.0.2",
     "express": "^4.13.4",
     "jade": "^1.11.0",
     "multer": "^1.1.0",
-    "nodegit": "^0.13.0",
     "rimraf": "^2.5.2"
   }
 }

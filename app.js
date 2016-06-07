@@ -76,6 +76,7 @@ app.post('/write_file', bodyParser.json(), (req, res) => {
 
   fs.writeFileSync(config.diskPath + path, content);
   res.end()
+  git.updateToOrigin('Update by ' + req.user.fullName)
 })
 
 app.get('/read_file', bodyParser.json(), (req, res) => {

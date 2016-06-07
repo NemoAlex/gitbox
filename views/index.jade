@@ -19,6 +19,9 @@ block content
               .btn.btn-success(@click="nowShowing = 'upload'")
                 i.fa.fa-upload
                 span 上传文件
+              .btn.btn-primary(@click="editorShowing = true")
+                i.fa.fa-file-text
+                span 新建 Markdown
               .btn.btn-warning(@click="nowShowing = 'renameFolder'")
                 i.fa.fa-edit
                 span 重命名目录
@@ -50,6 +53,9 @@ block content
                 input(name="path", type="hidden", v-model="path")
           .tools(v-show="selecting.tree && selecting.tree.type === 'file'")
             .buttons
+              .btn.btn-primary(@click="editFile", v-if="path.match(/\.md$/)")
+                i.fa.fa-edit
+                span 编辑文件
               .btn.btn-warning(@click="nowShowing = 'renameFile'")
                 i.fa.fa-edit
                 span 重命名
@@ -67,6 +73,21 @@ block content
               p
                 .btn.btn-danger(@click="remove") 删除
                 .btn.btn-default(@click="nowShowing = ''") 取消
+        .modal.editor(:style="{display: editorShowing ? 'block' : 'none'}", style="background: rgba(0,0,0,.5); overflow-y: auto;", @click="editorShowing = false")
+          .modal-dialog.modal-lg(@click.stop)
+            .modal-content(style="box-shadow: none")
+              .modal-header
+                .btn.btn-success(@click="createFile") 保存
+                input(v-model="createFileName")
+                button.close(type="button", @click="editorShowing = false")
+                  span ×
+              .modal-body
+                .row
+                  .col-md-6
+                    textarea(v-model="draft", rows=20)
+                  .col-md-6
+                    .markdown-body {{{preview}}}
+
   #tree-part(style="display: none")
     .name(@click="select", :class="{selected: selected}")
       i.fa(:class="icon")

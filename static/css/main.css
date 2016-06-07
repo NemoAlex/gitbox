@@ -31,6 +31,7 @@
 }
 #gitbox .tools .btn {
   margin-right: 4px;
+  margin-bottom: 4px;
 }
 
 #gitbox .upload {
@@ -43,4 +44,32 @@
 
 #gitbox .right-part .buttons {
   margin-bottom: 10px;
+}
+
+#gitbox .editor textarea {
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-shadow: 0 0 16px 0 rgba(0,0,0,0.04);
+  background: white;
+  outline: none;
+  padding: 4px 8px;
+  color: inherit;
+  resize: vertical;
+  -webkit-appearance: none;
+}
+#gitbox .editor input {
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-shadow: 0 0 16px 0 rgba(0,0,0,0.04);
+  background: white;
+  outline: none;
+  padding: 4px 8px;
+  color: inherit;
+  height: 34px;
+  -webkit-appearance: none;
+}
+
+#gitbox .editor .btn {
+  margin-right: 10px;
 }

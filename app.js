@@ -70,6 +70,21 @@ app.post('/create_folder', bodyParser.json(), (req, res) => {
   res.end()
 })
 
+app.post('/write_file', bodyParser.json(), (req, res) => {
+  var path = req.body.path
+    , content = req.body.content
+
+  fs.writeFileSync(config.diskPath + path, content);
+  res.end()
+})
+
+app.get('/read_file', bodyParser.json(), (req, res) => {
+  var path = req.query.path
+
+  var content = fs.readFileSync(config.diskPath + path, 'UTF-8');
+  res.end(content)
+})
+
 app.post('/rename', bodyParser.json(), (req, res) => {
   var path = config.diskPath + req.body.path
   var newname = req.body.newname

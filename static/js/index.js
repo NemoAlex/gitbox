@@ -39,7 +39,10 @@ var vue =  new Vue({
     createFolderName: '',
     renameFolderName: '',
     renameFileName: '',
-    dropzone: {}
+    dropzone: {},
+    editorShowing: false,
+    draft: '',
+    createFileName: 'README.md'
   },
   computed: {
     'navigator': function () {
@@ -49,6 +52,9 @@ var vue =  new Vue({
     'path': function () {
       if (!this.selecting.tree || !this.selecting.tree.path) return ''
       return this.selecting.tree.path.replace(this.root, '')
+    },
+    'preview': function () {
+      return markdown.toHTML(this.draft)
     }
   },
   watch: {
@@ -66,6 +72,12 @@ var vue =  new Vue({
     'path': function () {
       this.nowShowing = ''
       this.dropzone.removeAllFiles()
+    },
+    'editorShowing': function (val) {
+      if (val === false) {
+        this.createFileName = 'README.md'
+        this.draft = ''
+      }
     }
   },
   events: {
@@ -90,6 +102,14 @@ var vue =  new Vue({
         vue.tree = res.data.tree
       })
     },
+    'editFile': function () {
+      this.readFile()
+      .then(function () {
+        vue.editorShowing = true
+        var arr = vue.path.split('/')
+        vue.createFileName = arr[arr.length-1]
+      })
+    },
     'createFolder': function () {
       this.nowShowing = ''
       this.$http.post('/create_folder', {
@@ -98,6 +118,27 @@ var vue =  new Vue({
       .then(function (res) {
         this.createFolderName = ''
         this.fetch()
+      })
+    },
+    'createFile': function () {
+      var path = ''
+      if (this.selecting.tree.type === 'file') path = this.path
+      else if (this.selecting.tree.type === 'folder') path = this.path + '/' + this.createFileName
+      this.$http.post('/write_file', {
+        path: path,
+        content: this.draft
+      })
+      .then(function (res) {
+        this.editorShowing = false
+        this.fetch()
+      })
+    },
+    'readFile': function () {
+      return this.$http.get('/read_file', {
+        path: this.path
+      })
+      .then(function (res) {
+        this.draft = res.data
       })
     },
     'rename': function (newname) {

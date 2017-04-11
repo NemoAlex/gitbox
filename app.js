@@ -124,7 +124,7 @@ app.listen(4500, function () {
 })
 
 github.on('*', function () {
-  console.log('catch!')
+  git.pull()
 })
 
 github.listen()

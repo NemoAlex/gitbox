@@ -11,7 +11,6 @@ var express = require('express')
   , git = require('./lib/git')
   , stormpath = require('express-stormpath')
   , githubhook = require('githubhook')
-  , github = githubhook({ port: 4501 })
 
 app.use(express.static(Path.join(__dirname, 'static')));
 
@@ -119,9 +118,11 @@ app.get('/commit_and_push', (req, res) => {
   })
 })
 
-app.listen(4500, function () {
-  console.log('gitbox listening on port 4500!')
+app.listen(config.ports.app, function () {
+  console.log('gitbox listening on port ' + config.ports.app)
 })
+
+var  github = githubhook({ port: config.ports.webhook })
 
 github.on('*', function () {
   git.pull()

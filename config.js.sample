@@ -8,5 +8,9 @@ module.exports = {
     secret: '',
     href: ''
   },
+  ports: {
+    app: 4500,
+    webhook: 4501
+  },
   enableRegister: false
 }

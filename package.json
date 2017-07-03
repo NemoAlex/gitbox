@@ -21,7 +21,7 @@
     "child-process-promise": "^2.0.2",
     "express": "^4.13.4",
     "express-stormpath": "^3.1.2",
-    "githubhook": "^1.7.1",
+    "githubhook": "NemoAlex/node-github-hook",
     "jade": "^1.11.0",
     "multer": "^1.1.0",
     "queue": "^4.0.0",

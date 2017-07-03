@@ -615,9 +615,9 @@ getpass@^0.1.1:
   dependencies:
     assert-plus "^1.0.0"
 
-githubhook@^1.7.1:
+githubhook@NemoAlex/node-github-hook:
   version "1.7.1"
-  resolved "http://registry.npm.taobao.org/githubhook/download/githubhook-1.7.1.tgz#823ad024807ddd0b068525bad8754823a8e2ab58"
+  resolved "https://codeload.github.com/NemoAlex/node-github-hook/tar.gz/600900f9d287a42e15a4d1b6467cdd32698a34c1"
   dependencies:
     docopt "^0.6.2"
     multiline "^1.0.2"

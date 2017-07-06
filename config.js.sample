@@ -1,16 +1,15 @@
 module.exports = {
   projectName: 'GitBox',
-  diskPath: '/tmp',
+  diskPath: '/path/to/folder',
   useGit: true,
-  enableStormpath: true,
-  stormpath: {
-    id: '',
-    secret: '',
-    href: ''
-  },
   ports: {
     app: 4500,
     webhook: 4501
+  },
+  requireLogin: false,
+  leancloud: {
+    appId: '',
+    appKey: ''
   },
   enableRegister: false
 }

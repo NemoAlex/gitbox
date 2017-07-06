@@ -3,10 +3,12 @@ block content
   #gitbox
     .navbar.navbar-default
       .container
-        .navbar-brand #{projectName}
+        .navbar-brand #{ config.projectName }
         ul.nav.navbar-nav.navbar-right
           li
-            a(@click.prevent="logout", href="") 退出
+            a #{username}
+          li
+            a(href="/logout") 退出
     .container
       .row
         .col-md-5.tree

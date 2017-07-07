@@ -83,9 +83,13 @@ app.get('/', (req, res) => {
   })
 })
 
+var ignoreList = []
+if (fs.existsSync('./gitboxignore')) {
+  ignoreList = fs.readFileSync('./gitboxignore', 'utf8').split('\n').filter(r => r && !!r.indexOf('#'))
+}
 app.get('/tree', (req, res) => {
   var root = config.diskPath
-  var tree = dirTree(root, ['^[_|.]'])
+  var tree = dirTree(root, ignoreList)
   res.json({root, tree})
 })
 

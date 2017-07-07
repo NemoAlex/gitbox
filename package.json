@@ -22,6 +22,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
     "githubhook": "NemoAlex/node-github-hook",
+    "ignore": "^3.3.3",
     "jade": "^1.11.0",
     "leancloud-storage": "^3.0.1",
     "multer": "^1.1.0",

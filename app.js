@@ -12,6 +12,7 @@ var express = require('express')
   , AV = require('leancloud-storage')
   , githubhook = require('githubhook')
   , cookieParser = require('cookie-parser')
+  , ignore = require('ignore')
 
 app.use(express.static(Path.join(__dirname, 'static')))
 app.use(cookieParser())
@@ -83,13 +84,16 @@ app.get('/', (req, res) => {
   })
 })
 
-var ignoreList = []
-if (fs.existsSync('./gitboxignore')) {
-  ignoreList = fs.readFileSync('./gitboxignore', 'utf8').split('\n').filter(r => r && !!r.indexOf('#'))
+var ig = ignore()
+if (fs.existsSync(config.diskPath + '/.gitignore')) {
+  ig.add(fs.readFileSync(config.diskPath + '/.gitignore').toString())
+}
+if (fs.existsSync('.gitboxignore')) {
+  ig.add(fs.readFileSync('.gitboxignore').toString())
 }
 app.get('/tree', (req, res) => {
   var root = config.diskPath
-  var tree = dirTree(root, ignoreList)
+  var tree = dirTree(root, ig)
   res.json({root, tree})
 })
 

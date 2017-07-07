@@ -51,7 +51,7 @@ if (config.requireLogin) {
   app.post('/login', (req, res) => {
     AV.User.logIn(req.body.username, req.body.password)
     .then(result => {
-      res.cookie('authentication', result._sessionToken, { maxAge: 900000, httpOnly: true })
+      res.cookie('authentication', result._sessionToken, { maxAge: config.sessionAge || 1296000000, httpOnly: true })
       return res.redirect('/')
     })
     .catch(err => {

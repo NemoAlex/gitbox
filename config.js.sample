@@ -6,6 +6,7 @@ module.exports = {
     app: 4500,
     webhook: 4501
   },
+  sessionAge: 1296000000,
   requireLogin: false,
   leancloud: {
     appId: '',
